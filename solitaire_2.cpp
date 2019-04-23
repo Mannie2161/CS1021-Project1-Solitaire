@@ -113,11 +113,8 @@ vector<cards> Tableau(vector<cards> myDeck, int opt) {
         tableauDeck.at(i) = myDeck.at(random_nums.at(i));
     }
     
-    ShowPile(myDeck, tableauDeck, opt);
-    
-    
     /*
-    //show the Tableau
+    //show the Tableau -- CHECK ONLY
     for(int i=0;i<28;i++)
         tableauDeck[i].display();
     
@@ -157,49 +154,60 @@ vector<cards> Tableau(vector<cards> myDeck, int opt) {
     return tableauDeck;
 }
 
-vector<cards> FlipPile(vector<cards> pile) {
-
+vector<cards> MoveCard(vector<cards> tableauDeck) {
+    vector<cards> updatedDeck(52);
+    
+    return updatedDeck;
 }
 
 int main() {
     
     srand(time(NULL));
     
-    vector<cards> myDeck(52);
+    vector<cards> startingDeck(52);
+    vector<cards> tableauDeck(52);
     
     //initialize card color in the deck
     for(int i=0; i<2; i++) {
         for(int j=(26*i); j<(26*2); j++){
-            myDeck[j].setColor(i);
+            startingDeck[j].setColor(i);
         }
     }
     
     //initialize card number and type in the deck
     for(int i=0;i<13;i++) {
-        myDeck[i].setNum(i+1);
-        myDeck[i].setType(0);
+        startingDeck[i].setNum(i+1);
+        startingDeck[i].setType(0);
     }
     
     for(int i=13;i<26;i++) {
-        myDeck[i].setNum(i-12);
-        myDeck[i].setType(1);
+        startingDeck[i].setNum(i-12);
+        startingDeck[i].setType(1);
     }
     
     for(int i=26;i<39;i++) {
-        myDeck[i].setNum(i-25);
-        myDeck[i].setType(2);
+        startingDeck[i].setNum(i-25);
+        startingDeck[i].setType(2);
     }
     
     for(int i=39;i<52;i++) {
-        myDeck[i].setNum(i-38);
-        myDeck[i].setType(3);
+        startingDeck[i].setNum(i-38);
+        startingDeck[i].setType(3);
     }
     
     //place 28 cards randomly on the tableau
-    Tableau(myDeck,0);
+    tableauDeck = Tableau(startingDeck,0);
+    
+    cout<<endl;
+    
+    //Show the pile
+    ShowPile(startingDeck, tableauDeck, 0);
+    
+    //moving a card on the tableau
+    MoveCard(tableauDeck);
     
     //int num;
-    cout<<"Flip the pile? ";
+    //cout<<"Flip the pile? ";
     //cin >> num;
 
     return 0;
