@@ -2,6 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <time.h>
+#include <stdlib.h>
 using namespace std;
 
 class cards {
@@ -70,9 +71,8 @@ public:
     }
 };
 
-vector<cards> ShowPile(vector<cards> myDeck, vector<cards> tableauDeck, int opt) {
-    vector<cards> pile(52);
-    int pos=-1;
+vector<cards> MakePile(vector<cards> &pile, vector<cards> myDeck, vector<cards> tableauDeck, int opt) {
+    
     
     //assigning cards to the pile
     int c=0;
@@ -95,9 +95,20 @@ vector<cards> ShowPile(vector<cards> myDeck, vector<cards> tableauDeck, int opt)
         c+=1;
     } while (itr!=24);
     
-    //show the pile
+    return pile;
+}
+
+void ShowPile(vector<cards> &pile, int pos) {
     cout<<"Pile: ";
     
+    for(int i=0;i<pile.size();i++) {
+        if(i==(pos%24))
+            cout<<pile.at(i);
+        else
+            cout<<" * ";
+    }
+
+    /*
     if(opt == 0)
         for(int i=0;i<24;i++) {
             cout<<" * ";
@@ -110,7 +121,7 @@ vector<cards> ShowPile(vector<cards> myDeck, vector<cards> tableauDeck, int opt)
                 cout<<" * ";
         }
     pos += 1;
-    return pile;
+     */
 }
 
 vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, vector<cards> &row4, vector<cards> &row5, vector<cards> &row6, vector<cards> &row7) {
@@ -268,7 +279,8 @@ void MoveCard(vector<cards> &row_init, int element, vector<cards> &row_fin) {
     row_init.resize(row_init.size()-counter);
     int i;
     for(i=0;i<row_init.size();i++);
-    row_init.at(i-1).isFlipped = true;
+    if(row_init.size()!=0)
+        row_init.at(i-1).isFlipped = true;
 }
 
 void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, vector<cards> &row4, vector<cards> &row5, vector<cards> &row6, vector<cards> &row7) {
@@ -334,11 +346,12 @@ void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, 
 int main() {
     
     srand(time(NULL));
-    int opt;
+    int opt, pos=0;
     int element, row_init, row_fin;
 RESTART:
     vector<cards> startingDeck(52);
     vector<cards> tableauDeck(52);
+    vector<cards> pile(24);
     vector<cards> row1(1);
     vector<cards> row2(2);
     vector<cards> row3(3);
@@ -381,26 +394,28 @@ RESTART:
     cout<<endl;
     
     //Show the pile
-    ShowPile(startingDeck, tableauDeck, 0);
+    MakePile(pile, startingDeck, tableauDeck, 0);
+    ShowPile(pile, pos);
     cout<<endl;
     
     showTableau(row1, row2, row3, row4, row5, row6, row7);
     
     
     do{
-        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL PILE\n 3 : RESTART\n 4: EXIT\n";
+        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL PILE\n 3 : RESTART\n 4 : EXIT\n";
         cin>>opt;
         if(opt==3) {
             goto RESTART;
+        }
+        
+        if(opt==2) {
+            ShowPile(pile, pos);
+            pos+=1;
         }
         else if(opt==1) {
             //moving a card on the tableau
             cout<<"\nRow number and card position of the card PICKED: ";
             cin>>row_init>>element;
-            if(row_init == 0) {
-                cout<<"restarting: \n\n";
-                break;
-            }
             cout<<"\nRow where the picked card will be PLACED: ";
             cin>>row_fin;
             
@@ -498,13 +513,14 @@ RESTART:
                 MoveCard(row7, element, row2);
             
             showTableau(row1, row2, row3, row4, row5, row6, row7);
-            ShowPile(startingDeck, tableauDeck, 0);
+            ShowPile(pile, pos);
             cout<<endl;
+            //system('cls');
         }
         else if(opt==4)
             exit(0);
         
-    }while(row_init != 0);
+    }while(1);
     
     //int num;
     //cout<<"Flip the pile? ";
@@ -520,6 +536,7 @@ RESTART:
  
  vector<cards> startingDeck(52);
  vector<cards> tableauDeck(52);
+ vector<cards> pile(24);
  vector<cards> row1(1);
  vector<cards> row2(2);
  vector<cards> row3(3);
@@ -561,7 +578,8 @@ RESTART:
  cout<<endl;
  
  //Show the pile
- ShowPile(startingDeck, tableauDeck, 0);
+ MakePile(startingDeck, tableauDeck, 0);
+ ShowPile(pile, pos);
  cout<<endl;
  
  showTableau(row1, row2, row3, row4, row5, row6, row7);*/
