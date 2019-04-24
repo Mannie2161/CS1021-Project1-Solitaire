@@ -336,6 +336,7 @@ int main() {
     srand(time(NULL));
     int opt;
     int element, row_init, row_fin;
+RESTART:
     vector<cards> startingDeck(52);
     vector<cards> tableauDeck(52);
     vector<cards> row1(1);
@@ -345,7 +346,7 @@ int main() {
     vector<cards> row5(5);
     vector<cards> row6(6);
     vector<cards> row7(7);
-RESTART:
+
     //initialize card color in the deck
     for(int i=0; i<2; i++) {
         for(int j=(26*i); j<(26*2); j++){
@@ -387,114 +388,122 @@ RESTART:
     
     
     do{
-        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL PILE\n 3 : RESTART\n";
+        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL PILE\n 3 : RESTART\n 4: EXIT\n";
         cin>>opt;
-        //moving a card on the tableau
-        cout<<"\nRow number and card position of the card PICKED: ";
-        cin>>row_init>>element;
-        if(row_init == 0) {
-            cout<<"restarting: \n\n";
-            break;
+        if(opt==3) {
+            goto RESTART;
         }
-        cout<<"\nRow where the picked card will be PLACED: ";
-        cin>>row_fin;
+        else if(opt==1) {
+            //moving a card on the tableau
+            cout<<"\nRow number and card position of the card PICKED: ";
+            cin>>row_init>>element;
+            if(row_init == 0) {
+                cout<<"restarting: \n\n";
+                break;
+            }
+            cout<<"\nRow where the picked card will be PLACED: ";
+            cin>>row_fin;
+            
+            
+            //CAN MAKE INTO A NEW FUNCTION -- CALLING TO CHANGE LOCATION OF CARDS
+            if(row_init==1 && row_fin==2)
+                MoveCard(row1, element, row2);
+            else if(row_init==1 && row_fin==3)
+                MoveCard(row1, element, row3);
+            else if(row_init==1 && row_fin==4)
+                MoveCard(row1, element, row4);
+            else if(row_init==1 && row_fin==5)
+                MoveCard(row1, element, row5);
+            else if(row_init==1 && row_fin==6)
+                MoveCard(row1, element, row6);
+            else if(row_init==1 && row_fin==7)
+                MoveCard(row1, element, row7);
+            
+            else if(row_init==2 && row_fin==1)
+                MoveCard(row2, element, row1);
+            else if(row_init==2 && row_fin==3)
+                MoveCard(row2, element, row3);
+            else if(row_init==2 && row_fin==4)
+                MoveCard(row2, element, row4);
+            else if(row_init==2 && row_fin==5)
+                MoveCard(row2, element, row5);
+            else if(row_init==2 && row_fin==6)
+                MoveCard(row2, element, row6);
+            else if(row_init==2 && row_fin==7)
+                MoveCard(row2, element, row7);
+            
+            else if(row_init==3 && row_fin==1)
+                MoveCard(row3, element, row1);
+            else if(row_init==3 && row_fin==2)
+                MoveCard(row3, element, row2);
+            else if(row_init==3 && row_fin==4)
+                MoveCard(row3, element, row4);
+            else if(row_init==3 && row_fin==5)
+                MoveCard(row3, element, row5);
+            else if(row_init==3 && row_fin==6)
+                MoveCard(row3, element, row6);
+            else if(row_init==3 && row_fin==7)
+                MoveCard(row3, element, row7);
+            
+            else if(row_init==4 && row_fin==1)
+                MoveCard(row4, element, row1);
+            else if(row_init==4 && row_fin==3)
+                MoveCard(row4, element, row3);
+            else if(row_init==4 && row_fin==2)
+                MoveCard(row4, element, row2);
+            else if(row_init==4 && row_fin==5)
+                MoveCard(row4, element, row5);
+            else if(row_init==4 && row_fin==6)
+                MoveCard(row4, element, row6);
+            else if(row_init==4 && row_fin==7)
+                MoveCard(row4, element, row7);
+            
+            else if(row_init==5 && row_fin==1)
+                MoveCard(row5, element, row1);
+            else if(row_init==5 && row_fin==3)
+                MoveCard(row5, element, row3);
+            else if(row_init==5 && row_fin==4)
+                MoveCard(row5, element, row4);
+            else if(row_init==5 && row_fin==2)
+                MoveCard(row5, element, row2);
+            else if(row_init==5 && row_fin==6)
+                MoveCard(row5, element, row6);
+            else if(row_init==5 && row_fin==7)
+                MoveCard(row5, element, row7);
+            
+            else if(row_init==6 && row_fin==1)
+                MoveCard(row6, element, row1);
+            else if(row_init==6 && row_fin==3)
+                MoveCard(row6, element, row3);
+            else if(row_init==6 && row_fin==4)
+                MoveCard(row6, element, row4);
+            else if(row_init==6 && row_fin==5)
+                MoveCard(row6, element, row5);
+            else if(row_init==6 && row_fin==2)
+                MoveCard(row6, element, row2);
+            else if(row_init==6 && row_fin==7)
+                MoveCard(row6, element, row7);
+            
+            else if(row_init==7 && row_fin==1)
+                MoveCard(row7, element, row1);
+            else if(row_init==7 && row_fin==3)
+                MoveCard(row7, element, row3);
+            else if(row_init==7 && row_fin==4)
+                MoveCard(row7, element, row4);
+            else if(row_init==7 && row_fin==5)
+                MoveCard(row7, element, row5);
+            else if(row_init==7 && row_fin==6)
+                MoveCard(row7, element, row6);
+            else if(row_init==7 && row_fin==2)
+                MoveCard(row7, element, row2);
+            
+            showTableau(row1, row2, row3, row4, row5, row6, row7);
+            ShowPile(startingDeck, tableauDeck, 0);
+            cout<<endl;
+        }
+        else if(opt==4)
+            exit(0);
         
-        
-        //CAN MAKE INTO A NEW FUNCTION -- CALLING TO CHANGE LOCATION OF CARDS
-        if(row_init==1 && row_fin==2)
-            MoveCard(row1, element, row2);
-        else if(row_init==1 && row_fin==3)
-            MoveCard(row1, element, row3);
-        else if(row_init==1 && row_fin==4)
-            MoveCard(row1, element, row4);
-        else if(row_init==1 && row_fin==5)
-            MoveCard(row1, element, row5);
-        else if(row_init==1 && row_fin==6)
-            MoveCard(row1, element, row6);
-        else if(row_init==1 && row_fin==7)
-            MoveCard(row1, element, row7);
-        
-        else if(row_init==2 && row_fin==1)
-            MoveCard(row2, element, row1);
-        else if(row_init==2 && row_fin==3)
-            MoveCard(row2, element, row3);
-        else if(row_init==2 && row_fin==4)
-            MoveCard(row2, element, row4);
-        else if(row_init==2 && row_fin==5)
-            MoveCard(row2, element, row5);
-        else if(row_init==2 && row_fin==6)
-            MoveCard(row2, element, row6);
-        else if(row_init==2 && row_fin==7)
-            MoveCard(row2, element, row7);
-        
-        else if(row_init==3 && row_fin==1)
-            MoveCard(row3, element, row1);
-        else if(row_init==3 && row_fin==2)
-            MoveCard(row3, element, row2);
-        else if(row_init==3 && row_fin==4)
-            MoveCard(row3, element, row4);
-        else if(row_init==3 && row_fin==5)
-            MoveCard(row3, element, row5);
-        else if(row_init==3 && row_fin==6)
-            MoveCard(row3, element, row6);
-        else if(row_init==3 && row_fin==7)
-            MoveCard(row3, element, row7);
-        
-        else if(row_init==4 && row_fin==1)
-            MoveCard(row4, element, row1);
-        else if(row_init==4 && row_fin==3)
-            MoveCard(row4, element, row3);
-        else if(row_init==4 && row_fin==2)
-            MoveCard(row4, element, row2);
-        else if(row_init==4 && row_fin==5)
-            MoveCard(row4, element, row5);
-        else if(row_init==4 && row_fin==6)
-            MoveCard(row4, element, row6);
-        else if(row_init==4 && row_fin==7)
-            MoveCard(row4, element, row7);
-        
-        else if(row_init==5 && row_fin==1)
-            MoveCard(row5, element, row1);
-        else if(row_init==5 && row_fin==3)
-            MoveCard(row5, element, row3);
-        else if(row_init==5 && row_fin==4)
-            MoveCard(row5, element, row4);
-        else if(row_init==5 && row_fin==2)
-            MoveCard(row5, element, row2);
-        else if(row_init==5 && row_fin==6)
-            MoveCard(row5, element, row6);
-        else if(row_init==5 && row_fin==7)
-            MoveCard(row5, element, row7);
-        
-        else if(row_init==6 && row_fin==1)
-            MoveCard(row6, element, row1);
-        else if(row_init==6 && row_fin==3)
-            MoveCard(row6, element, row3);
-        else if(row_init==6 && row_fin==4)
-            MoveCard(row6, element, row4);
-        else if(row_init==6 && row_fin==5)
-            MoveCard(row6, element, row5);
-        else if(row_init==6 && row_fin==2)
-            MoveCard(row6, element, row2);
-        else if(row_init==6 && row_fin==7)
-            MoveCard(row6, element, row7);
-        
-        else if(row_init==7 && row_fin==1)
-            MoveCard(row7, element, row1);
-        else if(row_init==7 && row_fin==3)
-            MoveCard(row7, element, row3);
-        else if(row_init==7 && row_fin==4)
-            MoveCard(row7, element, row4);
-        else if(row_init==7 && row_fin==5)
-            MoveCard(row7, element, row5);
-        else if(row_init==7 && row_fin==6)
-            MoveCard(row7, element, row6);
-        else if(row_init==7 && row_fin==2)
-            MoveCard(row7, element, row2);
-        
-        showTableau(row1, row2, row3, row4, row5, row6, row7);
-        ShowPile(startingDeck, tableauDeck, 0);
-        cout<<endl;
     }while(row_init != 0);
     
     //int num;
@@ -504,3 +513,55 @@ RESTART:
     return 0;
 }
 
+
+/*
+ 
+ //IF GOTO FAILS TO RESTART, USE THIS
+ 
+ vector<cards> startingDeck(52);
+ vector<cards> tableauDeck(52);
+ vector<cards> row1(1);
+ vector<cards> row2(2);
+ vector<cards> row3(3);
+ vector<cards> row4(4);
+ vector<cards> row5(5);
+ vector<cards> row6(6);
+ vector<cards> row7(7);
+ //initialize card color in the deck
+ for(int i=0; i<2; i++) {
+ for(int j=(26*i); j<(26*2); j++){
+ startingDeck[j].setColor(i);
+ }
+ }
+ 
+ //initialize card number and type in the deck
+ for(int i=0;i<13;i++) {
+ startingDeck[i].setNum(i+1);
+ startingDeck[i].setType(0);
+ }
+ 
+ for(int i=13;i<26;i++) {
+ startingDeck[i].setNum(i-12);
+ startingDeck[i].setType(1);
+ }
+ 
+ for(int i=26;i<39;i++) {
+ startingDeck[i].setNum(i-25);
+ startingDeck[i].setType(2);
+ }
+ 
+ for(int i=39;i<52;i++) {
+ startingDeck[i].setNum(i-38);
+ startingDeck[i].setType(3);
+ }
+ 
+ //place 28 cards randomly on the tableau
+ tableauDeck = Tableau(startingDeck, row1, row2, row3, row4, row5, row6, row7);
+ 
+ cout<<endl;
+ 
+ //Show the pile
+ ShowPile(startingDeck, tableauDeck, 0);
+ cout<<endl;
+ 
+ showTableau(row1, row2, row3, row4, row5, row6, row7);*/
