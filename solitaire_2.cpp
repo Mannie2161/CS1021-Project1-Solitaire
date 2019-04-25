@@ -377,6 +377,7 @@ void main_Game() {
 RESTART:
     vector<cards> startingDeck(52);
     vector<cards> tableauDeck(52);
+    
     vector<cards> pile(24);
     vector<cards> row1(1);
     vector<cards> row2(2);
@@ -385,6 +386,11 @@ RESTART:
     vector<cards> row5(5);
     vector<cards> row6(6);
     vector<cards> row7(7);
+    
+    vector<cards> bin1(0);
+    vector<cards> bin2(0);
+    vector<cards> bin3(0);
+    vector<cards> bin4(0);
     
     //initialize card color in the deck
     for(int i=0; i<2; i++) {
@@ -426,13 +432,12 @@ RESTART:
     
     //`     showTableau(row1, row2, row3, row4, row5, row6, row7);
     
-    
     do{
-        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL NEXT FROM PILE\n 3 : USE CARD FROM PILE\n 4 : RESTART\n 5 : EXIT\n";
+        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL NEXT FROM PILE\n 3 : USE CARD FROM PILE\n 4 : ADD CARD TO A BIN\n 5 : RESTART\n 6 : EXIT\n";
         cin>>opt;
         //opt = _getchar();
         //system("CLS");
-        if(opt==4) {
+        if(opt==5) {
             pos = -1;
             cout<<"\nRESTARED\n\n";
             goto RESTART;
@@ -572,7 +577,7 @@ RESTART:
             cout<<endl;
             //system('cls');
         }
-        else if(opt==5)
+        else if(opt==6)
             exit(0);
         
     }while(1);
