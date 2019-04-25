@@ -103,10 +103,14 @@ void ShowPile(vector<cards> &pile, int pos) {
     cout<<"Pile: ";
     
     for(int i=0;i<pile.size();i++) {
-        if(i==(pos%24))
+        if(i==(pos%24)) {
             cout<<pile.at(i);
-        else
+            pile.at(i).isFlipped = true;
+        }
+        else {
             cout<<" * ";
+            pile.at(i).isFlipped = false;
+        }
     }
 
     /*
@@ -272,16 +276,30 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
 
 void MoveCard(vector<cards> &row_init, int element, vector<cards> &row_fin) {
     int counter = 0;
-    for(int i=element; i<row_init.size();i++) {
-        row_fin.push_back(row_init.at(i));
-        counter +=1;
+    int size = row_fin.size()-1;
+    if(element > row_init.size())
+        cout<<"\n\nCARD SELECTION OUT OF RANGE. TRY AGAIN.\n\n";
+    
+    
+    else if(row_init.at(element).isFlipped==true) {     //CHECK IF THE NUMBER BEING ADDED IS ONE LOWER THAN THE PREVIOUS ONE
+        if(row_fin.at(size).getNum() - row_init.at(element).getNum()==1) {
+            for(int i=element; i<row_init.size();i++) {
+                row_fin.push_back(row_init.at(i));
+                counter +=1;
+            }
+            //row_fin.resize(row_fin.size()+1); -- NOT REQUIRED
+            row_init.resize(row_init.size()-counter);
+            int i;
+            for(i=0;i<row_init.size();i++);
+            if(row_init.size()!=0)
+                row_init.at(i-1).isFlipped = true;
+        }
+        else
+            cout<<"\n\nCANNOT PLACE THE CARD THERE. TRY AGAIN.\n\n";
     }
-    //row_fin.resize(row_fin.size()+1); -- NOT REQUIRED
-    row_init.resize(row_init.size()-counter);
-    int i;
-    for(i=0;i<row_init.size();i++);
-    if(row_init.size()!=0)
-        row_init.at(i-1).isFlipped = true;
+    
+    else if(row_init.at(element).isFlipped==false)
+        cout<<"\n\nAll cards in the selected range are not flipped. TRY AGAIN.\n\n";
 }
 
 void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, vector<cards> &row4, vector<cards> &row5, vector<cards> &row6, vector<cards> &row7) {
@@ -343,8 +361,18 @@ void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, 
     }
     cout<<endl;
 }
-void main_Game(){
-    int opt, pos=0;
+
+void Use_Pile(vector<cards> &pile, vector<cards> &target) {
+    for(int i=0;i<pile.size();i++) {
+        if(pile.at(i).isFlipped==true) {
+            target.push_back(pile.at(i));
+            pile.erase(pile.begin()+i);
+        }
+    }
+}
+
+void main_Game() {
+    int opt, pos=-1, row_pile;
     int element, row_init, row_fin;
 RESTART:
     vector<cards> startingDeck(52);
@@ -400,19 +428,44 @@ RESTART:
     
     
     do{
-        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL PILE\n 3 : RESTART\n 4 : EXIT\n";
+        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL NEXT FROM PILE\n 3 : USE CARD FROM PILE\n 4 : RESTART\n 5 : EXIT\n";
         cin>>opt;
         //opt = _getchar();
         //system("CLS");
-        if(opt==3) {
+        if(opt==4) {
+            pos = -1;
+            cout<<"\nRESTARED\n\n";
             goto RESTART;
-            pos = 0;
         }
         
-        if(opt==2) {
-            ShowPile(pile, pos);
+        else if(opt==2) {
             pos+=1;
+            ShowPile(pile, pos);
         }
+        
+        else if(opt==3) {
+            cout<<"Enter the row where you want to place the card: ";
+            cin>>row_pile;
+            
+            if(row_pile == 1)
+                Use_Pile(pile, row1);
+            else if(row_pile == 2)
+                Use_Pile(pile, row2);
+            else if(row_pile == 3)
+                Use_Pile(pile, row3);
+            else if(row_pile == 4)
+                Use_Pile(pile, row4);
+            else if(row_pile == 5)
+                Use_Pile(pile, row5);
+            else if(row_pile == 6)
+                Use_Pile(pile, row6);
+            else if(row_pile == 7)
+                Use_Pile(pile, row7);
+            
+            showTableau(row1, row2, row3, row4, row5, row6, row7);
+            ShowPile(pile, pos);
+        }
+        
         else if(opt==1) {
             //moving a card on the tableau
             cout<<"\nRow number and card position of the card PICKED: ";
@@ -519,7 +572,7 @@ RESTART:
             cout<<endl;
             //system('cls');
         }
-        else if(opt==4)
+        else if(opt==5)
             exit(0);
         
     }while(1);
@@ -589,4 +642,5 @@ int main() {
  ShowPile(pile, pos);
  cout<<endl;
  
- showTableau(row1, row2, row3, row4, row5, row6, row7);*/
+ showTableau(row1, row2, row3, row4, row5, row6, row7);
+ */
