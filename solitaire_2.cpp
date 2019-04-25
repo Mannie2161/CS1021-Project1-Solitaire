@@ -3,6 +3,7 @@
 #include <vector>
 #include <time.h>
 #include <stdlib.h>
+//#include <conio.h>
 using namespace std;
 
 class cards {
@@ -342,10 +343,7 @@ void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, 
     }
     cout<<endl;
 }
-
-int main() {
-    
-    srand(time(NULL));
+void main_Game(){
     int opt, pos=0;
     int element, row_init, row_fin;
 RESTART:
@@ -359,7 +357,7 @@ RESTART:
     vector<cards> row5(5);
     vector<cards> row6(6);
     vector<cards> row7(7);
-
+    
     //initialize card color in the deck
     for(int i=0; i<2; i++) {
         for(int j=(26*i); j<(26*2); j++){
@@ -398,14 +396,17 @@ RESTART:
     ShowPile(pile, pos);
     cout<<endl;
     
-    showTableau(row1, row2, row3, row4, row5, row6, row7);
+    //`     showTableau(row1, row2, row3, row4, row5, row6, row7);
     
     
     do{
         cout<<"\n 1 : MOVE CARD\n 2 : REVEAL PILE\n 3 : RESTART\n 4 : EXIT\n";
         cin>>opt;
+        //opt = _getchar();
+        //system("CLS");
         if(opt==3) {
             goto RESTART;
+            pos = 0;
         }
         
         if(opt==2) {
@@ -416,6 +417,7 @@ RESTART:
             //moving a card on the tableau
             cout<<"\nRow number and card position of the card PICKED: ";
             cin>>row_init>>element;
+            
             cout<<"\nRow where the picked card will be PLACED: ";
             cin>>row_fin;
             
@@ -521,6 +523,11 @@ RESTART:
             exit(0);
         
     }while(1);
+}
+int main() {
+    
+    srand(time(NULL));
+    main_Game();
     
     //int num;
     //cout<<"Flip the pile? ";
