@@ -3,10 +3,9 @@
 #include <vector>
 #include <time.h>
 #include <stdlib.h>
-//#include <conio.h>
 using namespace std;
 
-class cards {
+class cards {                       //class for all cards
 
     string color;
     int num;
@@ -69,11 +68,6 @@ public:
         cout<<type<<num<<endl;
     }
     
-    /*
-    bool cardIsFlipped(cards card){
-        return card.IsFlipped();
-    }
-    */
     bool operator == (cards &rhs) {
         if((color == rhs.color)&&(num == rhs.num)&&(type == rhs.type))
             return true;
@@ -82,7 +76,7 @@ public:
     }
 };
 
-vector<cards> MakePile(vector<cards> &pile, vector<cards> myDeck, vector<cards> tableauDeck, int opt) {
+vector<cards> MakePile(vector<cards> &pile, vector<cards> myDeck, vector<cards> tableauDeck, int opt) {     //first time initialization of the pile
     
     
     //assigning cards to the pile
@@ -109,7 +103,7 @@ vector<cards> MakePile(vector<cards> &pile, vector<cards> myDeck, vector<cards> 
     return pile;
 }
 
-void ShowPile(vector<cards> &pile, int pos) {
+void ShowPile(vector<cards> &pile, int pos) {       //shows the pile
     cout<<"Pile: ";
     
     for(int i=0;i<pile.size();i++) {
@@ -122,24 +116,9 @@ void ShowPile(vector<cards> &pile, int pos) {
             pile.at(i).isFlipped = false;
         }
     }
-
-    /*
-    if(opt == 0)
-        for(int i=0;i<24;i++) {
-            cout<<" * ";
-        }
-    else if(opt==1)
-        for(int i=0;i<24;i++) {
-            if(i == 23-pos)
-                cout<<pile.at(i);
-            else
-                cout<<" * ";
-        }
-    pos += 1;
-     */
 }
 
-vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, vector<cards> &row4, vector<cards> &row5, vector<cards> &row6, vector<cards> &row7) {
+vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, vector<cards> &row4, vector<cards> &row5, vector<cards> &row6, vector<cards> &row7) {            //first time initialization of the tableau
     vector<cards> tableauDeck(52);
     vector<int> random_nums(28);
     
@@ -154,26 +133,6 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     for(int i=0;i<28;i++) {
         tableauDeck.at(i) = myDeck.at(random_nums.at(i));
     }
-    
-    /*
-    //show the Tableau -- CHECK ONLY
-    for(int i=0;i<28;i++)
-        tableauDeck[i].display();
-    
-    cout<<endl<<endl;
-    */
-    
-    /*
-    //arrange the cards on the tableau -- NOT REQUIRED
-    int counter=0;
-    
-    for (int r=0;r<7;r++){
-        for(int c=0;c<=r;c++){
-            columns[r][c] = tableauDeck.at(counter);
-            counter++;
-        }
-    }
-    */
     
     //first time setup for the tableau
     int i=0;
@@ -205,26 +164,9 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
         row7.at(i) = tableauDeck.at(i+21);
     row7.at(6).isFlipped = true;
     
-    /*  ALTERNATE WAY OF PRINTING -- NOT REQUIRED
-    //cout<<endl<<endl;
-    for (int r=0;r<7;r++){
-        for(int c=0;c<=r;c++){
-            if(c==r) {
-                cout<<tableauDeck.at(counter);
-                tableauDeck.at(counter).isFlipped = true;
-                counter++;
-            }
-            else {
-                cout<<" * "<<"\t";
-                counter++;
-            }
-        }
-        cout<<endl;
-    }
-    */
-    
     int j = 0;
     
+    cout<<"1. ";
     for(j=0;j<1;j++) {
         if(row1.at(j).isFlipped == true)
             cout<<row1.at(j);
@@ -233,6 +175,7 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     }
     cout<<endl;
     
+     cout<<"2. ";
     for(j=0;j<2;j++) {
         if(row2.at(j).isFlipped == true)
             cout<<row2.at(j);
@@ -241,6 +184,8 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     }
     cout<<endl;
     
+    
+     cout<<"3. ";
     for(j=0;j<3;j++) {
         if(row3.at(j).isFlipped == true)
             cout<<row3.at(j);
@@ -249,6 +194,7 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     }
     cout<<endl;
     
+     cout<<"4. ";
     for(j=0;j<4;j++) {
         if(row4.at(j).isFlipped == true)
             cout<<row4.at(j);
@@ -257,6 +203,7 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     }
     cout<<endl;
     
+     cout<<"5. ";
     for(j=0;j<5;j++) {
         if(row5.at(j).isFlipped == true)
             cout<<row5.at(j);
@@ -265,6 +212,7 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     }
     cout<<endl;
     
+     cout<<"6. ";
     for(j=0;j<6;j++) {
         if(row6.at(j).isFlipped == true)
             cout<<row6.at(j);
@@ -273,6 +221,7 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     }
     cout<<endl;
     
+     cout<<"7. ";
     for(j=0;j<7;j++) {
         if(row7.at(j).isFlipped == true)
             cout<<row7.at(j);
@@ -284,7 +233,7 @@ vector<cards> Tableau(vector<cards> myDeck, vector<cards> &row1, vector<cards> &
     return tableauDeck;
 }
 
-void MoveCard(vector<cards> &row_init, int element, vector<cards> &row_fin) {
+void MoveCard(vector<cards> &row_init, int element, vector<cards> &row_fin) {           //move the cards inside the tableau
     int counter = 0;
     int size = row_fin.size()-1;
     if(element > row_init.size())
@@ -312,67 +261,75 @@ void MoveCard(vector<cards> &row_init, int element, vector<cards> &row_fin) {
         cout<<"\n\nAll cards in the selected range are not flipped. TRY AGAIN.\n\n";
 }
 
-void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, vector<cards> &row4, vector<cards> &row5, vector<cards> &row6, vector<cards> &row7) {
+void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, vector<cards> &row4, vector<cards> &row5, vector<cards> &row6, vector<cards> &row7) {               //show the tableau with all cards flipped/unflipped
     int j = 0;
     
+    cout<<"1. ";
     for(j=0;j<row1.size();j++) {
         if(row1.at(j).isFlipped == true)
-            cout<<row1.at(j);
+            cout<<" "<<row1.at(j);
         else
             cout<<" * ";
     }
     cout<<endl;
     
+    cout<<"2. ";
     for(j=0;j<row2.size();j++) {
         if(row2.at(j).isFlipped == true)
-            cout<<row2.at(j);
+            cout<<" "<<row2.at(j);
         else
             cout<<" * ";
     }
     cout<<endl;
     
+     cout<<"3. ";
     for(j=0;j<row3.size();j++) {
         if(row3.at(j).isFlipped == true)
-            cout<<row3.at(j);
+            cout<<" "<<row3.at(j);
         else
             cout<<" * ";
     }
     cout<<endl;
     
+     cout<<"4. ";
     for(j=0;j<row4.size();j++) {
         if(row4.at(j).isFlipped == true)
-            cout<<row4.at(j);
+            cout<<" "<<row4.at(j);
         else
             cout<<" * ";
     }
     cout<<endl;
     
+     cout<<"5. ";
     for(j=0;j<row5.size();j++) {
         if(row5.at(j).isFlipped == true)
-            cout<<row5.at(j);
+            cout<<" "<<row5.at(j);
         else
             cout<<" * ";
     }
     cout<<endl;
     
+     cout<<"6. ";
     for(j=0;j<row6.size();j++) {
         if(row6.at(j).isFlipped == true)
-            cout<<row6.at(j);
+            cout<<" "<<row6.at(j);
         else
             cout<<" * ";
     }
     cout<<endl;
     
+    
+     cout<<"7. ";
     for(j=0;j<row7.size();j++) {
         if(row7.at(j).isFlipped == true)
-            cout<<row7.at(j);
+            cout<<" "<<row7.at(j);
         else
             cout<<" * ";
     }
     cout<<endl<<endl;
 }
 
-void Use_Pile(vector<cards> &pile, vector<cards> &target) {
+void Use_Pile(vector<cards> &pile, vector<cards> &target) {             //do actions with the pile
     int i, size;
     for(i=0;i<target.size();i++);
     size = i-1;
@@ -388,11 +345,8 @@ void Use_Pile(vector<cards> &pile, vector<cards> &target) {
         }
     }
 }
-/*
-target.push_back(pile.at(i));
-pile.erase(pile.begin()+i);
-*/
-void Edit_Bin(vector<cards> &bin, vector<cards> &row) {
+
+bool Edit_Bin(vector<cards> &bin, vector<cards> &row) {             //add cards to the 4 bins
     
     int size_b, size,i;
     
@@ -405,26 +359,34 @@ void Edit_Bin(vector<cards> &bin, vector<cards> &row) {
         if(row.at(size).getNum()==1) {
             bin.push_back(row.at(size));
             row.erase(row.begin()+size);
-            row.at(size-1).isFlipped=true;
+            if(row.size()!=0)
+                row.at(size-1).isFlipped=true;
         }
-        else
+        else {
             cout<<"\n\nCANNOT PUT CARD TO THE BIN\n\n";
+            return false;
+        }
     }
     else if(bin.size()!=0) {
         if((bin.at(size_b).getNum() - row.at(size).getNum() == 1) && (bin.at(size_b).getType() == row.at(size).getType())) {
             bin.push_back(row.at(size));
             row.erase(row.begin()+size);
-            row.at(size-1).isFlipped=true;
+            if(row.size()!=0)
+                row.at(size-1).isFlipped=true;
         }
-        else
+        else {
             cout<<"\n\nCANNOT PUT CARD TO THE BIN\n\n";
+            return false;
+        }
     }
-    else
+    else {
         cout<<"\n\nCANNOT PUT CARD TO THE BIN\n\n";
-     
+        return false;
+    }
+    return false;
 }
 
-void show_Bins(vector<cards> &bin1, vector<cards> &bin2, vector<cards> &bin3, vector<cards> &bin4) {
+void show_Bins(vector<cards> &bin1, vector<cards> &bin2, vector<cards> &bin3, vector<cards> &bin4) {        //displays the bins
     
     cout<<"\n\nBIN1: \n";
     for(int i=0;i<bin1.size();i++)
@@ -477,9 +439,10 @@ void pileToBin(vector<cards> &pile, vector<cards> &target) {
 }
 
 
-void main_Game() {
-    int opt, pos=-1, row_pile, bin, bin_pile;
+void main_Game() {                  //game runs from here
+    int opt, pos=-1, row_pile, bin, bin_pile, loop_ctr=0;
     int element, row_init, row_fin, row_bin;
+    int history[1000];
 RESTART:
     vector<cards> startingDeck(52);
     vector<cards> tableauDeck(52);
@@ -538,12 +501,68 @@ RESTART:
     cout<<endl;
     
     //`     showTableau(row1, row2, row3, row4, row5, row6, row7);
-    
+    bool flag=true, flag_win=false;
+    int rep_ctr=0;
     do{
+        for(int i=0;i<row1.size();i++) {
+            if(row1.at(i).isFlipped != true)
+                flag_win=false;
+        }
+        for(int i=0;i<row2.size();i++) {
+            if(row2.at(i).isFlipped != true)
+                flag_win=false;
+        }
+        for(int i=0;i<row3.size();i++) {
+            if(row3.at(i).isFlipped != true)
+                flag_win=false;
+        }
+        for(int i=0;i<row4.size();i++) {
+            if(row4.at(i).isFlipped != true)
+                flag_win=false;
+        }
+        for(int i=0;i<row5.size();i++) {
+            if(row5.at(i).isFlipped != true)
+                flag_win=false;
+        }
+        for(int i=0;i<row6.size();i++) {
+            if(row6.at(i).isFlipped != true)
+                flag_win=false;
+        }
+        for(int i=0;i<row7.size();i++) {
+            if(row7.at(i).isFlipped != true)
+                flag_win=false;
+        }
+        
+        if(flag_win==true) {
+            cout<<"\n\nYOU'VE WON THE GAME!\n\n";
+            break;
+        }
         cout<<"\n 1 : MOVE CARD\n 2 : REVEAL NEXT FROM PILE\n 3 : USE CARD FROM PILE ON TABLEAU\n 4 : PUT CARD FROM PILE TO BIN\n 5 : ADD CARD TO A BIN\n 6 : RESTART\n 7 : EXIT\n";
         cin>>opt;
-        //opt = _getchar();
-        //system("CLS");
+        history[loop_ctr]=opt;
+        
+        /*
+        for(int a=0;a<row;a++) {
+            if(row1.at(a).isFlipped == true && row2.at(a).isFlipped == true && row3.at(a).isFlipped == true && row4.at(a).isFlipped == true && row5.at(a).isFlipped == true && row6.at(a).isFlipped == true && row7.at(a).isFlipped == true) {
+                cout<<"YOU HAVE WON THE GAME!";
+            }
+        }
+        */
+        rep_ctr = 0;
+        if(loop_ctr>30) {
+            for(int c=1;c<31;c++) {
+                if((history[loop_ctr-c]==2) && (history[loop_ctr]==2))
+                    rep_ctr+=1;
+            }
+        }
+        
+        if(rep_ctr >= 30)
+            flag = false;
+        
+        if(flag==false) {
+            cout<<"\n\nNO MORE MOVES CAN BE MADE, YOU HAVE LOST THE GAME!\n\n";
+        }
+        
         if(opt==6) {
             pos = -1;
             cout<<"\nRESTARED\n\n";
@@ -684,106 +703,107 @@ RESTART:
             
             //CAN MAKE INTO A NEW FUNCTION -- CALLING TO CHANGE LOCATION OF CARDS
             if(row_init==1 && row_fin==2)
-                MoveCard(row1, element, row2);
+                MoveCard(row1, element-1, row2);
             else if(row_init==1 && row_fin==3)
-                MoveCard(row1, element, row3);
+                MoveCard(row1, element-1, row3);
             else if(row_init==1 && row_fin==4)
-                MoveCard(row1, element, row4);
+                MoveCard(row1, element-1, row4);
             else if(row_init==1 && row_fin==5)
-                MoveCard(row1, element, row5);
+                MoveCard(row1, element-1, row5);
             else if(row_init==1 && row_fin==6)
-                MoveCard(row1, element, row6);
+                MoveCard(row1, element-1, row6);
             else if(row_init==1 && row_fin==7)
-                MoveCard(row1, element, row7);
+                MoveCard(row1, element-1, row7);
             
             else if(row_init==2 && row_fin==1)
-                MoveCard(row2, element, row1);
+                MoveCard(row2, element-1, row1);
             else if(row_init==2 && row_fin==3)
-                MoveCard(row2, element, row3);
+                MoveCard(row2, element-1, row3);
             else if(row_init==2 && row_fin==4)
-                MoveCard(row2, element, row4);
+                MoveCard(row2, element-1, row4);
             else if(row_init==2 && row_fin==5)
-                MoveCard(row2, element, row5);
+                MoveCard(row2, element-1, row5);
             else if(row_init==2 && row_fin==6)
-                MoveCard(row2, element, row6);
+                MoveCard(row2, element-1, row6);
             else if(row_init==2 && row_fin==7)
-                MoveCard(row2, element, row7);
+                MoveCard(row2, element-1, row7);
             
             else if(row_init==3 && row_fin==1)
-                MoveCard(row3, element, row1);
+                MoveCard(row3, element-1, row1);
             else if(row_init==3 && row_fin==2)
-                MoveCard(row3, element, row2);
+                MoveCard(row3, element-1, row2);
             else if(row_init==3 && row_fin==4)
-                MoveCard(row3, element, row4);
+                MoveCard(row3, element-1, row4);
             else if(row_init==3 && row_fin==5)
-                MoveCard(row3, element, row5);
+                MoveCard(row3, element-1, row5);
             else if(row_init==3 && row_fin==6)
-                MoveCard(row3, element, row6);
+                MoveCard(row3, element-1, row6);
             else if(row_init==3 && row_fin==7)
-                MoveCard(row3, element, row7);
+                MoveCard(row3, element-1, row7);
             
             else if(row_init==4 && row_fin==1)
-                MoveCard(row4, element, row1);
+                MoveCard(row4, element-1, row1);
             else if(row_init==4 && row_fin==3)
-                MoveCard(row4, element, row3);
+                MoveCard(row4, element-1, row3);
             else if(row_init==4 && row_fin==2)
-                MoveCard(row4, element, row2);
+                MoveCard(row4, element-1, row2);
             else if(row_init==4 && row_fin==5)
-                MoveCard(row4, element, row5);
+                MoveCard(row4, element-1, row5);
             else if(row_init==4 && row_fin==6)
-                MoveCard(row4, element, row6);
+                MoveCard(row4, element-1, row6);
             else if(row_init==4 && row_fin==7)
-                MoveCard(row4, element, row7);
+                MoveCard(row4, element-1, row7);
             
             else if(row_init==5 && row_fin==1)
-                MoveCard(row5, element, row1);
+                MoveCard(row5, element-1, row1);
             else if(row_init==5 && row_fin==3)
-                MoveCard(row5, element, row3);
+                MoveCard(row5, element-1, row3);
             else if(row_init==5 && row_fin==4)
-                MoveCard(row5, element, row4);
+                MoveCard(row5, element-1, row4);
             else if(row_init==5 && row_fin==2)
-                MoveCard(row5, element, row2);
+                MoveCard(row5, element-1, row2);
             else if(row_init==5 && row_fin==6)
-                MoveCard(row5, element, row6);
+                MoveCard(row5, element-1, row6);
             else if(row_init==5 && row_fin==7)
-                MoveCard(row5, element, row7);
+                MoveCard(row5, element-1, row7);
             
             else if(row_init==6 && row_fin==1)
-                MoveCard(row6, element, row1);
+                MoveCard(row6, element-1, row1);
             else if(row_init==6 && row_fin==3)
-                MoveCard(row6, element, row3);
+                MoveCard(row6, element-1, row3);
             else if(row_init==6 && row_fin==4)
-                MoveCard(row6, element, row4);
+                MoveCard(row6, element-1, row4);
             else if(row_init==6 && row_fin==5)
-                MoveCard(row6, element, row5);
+                MoveCard(row6, element-1, row5);
             else if(row_init==6 && row_fin==2)
-                MoveCard(row6, element, row2);
+                MoveCard(row6, element-1, row2);
             else if(row_init==6 && row_fin==7)
-                MoveCard(row6, element, row7);
+                MoveCard(row6, element-1, row7);
             
             else if(row_init==7 && row_fin==1)
-                MoveCard(row7, element, row1);
+                MoveCard(row7, element-1, row1);
             else if(row_init==7 && row_fin==3)
-                MoveCard(row7, element, row3);
+                MoveCard(row7, element-1, row3);
             else if(row_init==7 && row_fin==4)
-                MoveCard(row7, element, row4);
+                MoveCard(row7, element-1, row4);
             else if(row_init==7 && row_fin==5)
-                MoveCard(row7, element, row5);
+                MoveCard(row7, element-1, row5);
             else if(row_init==7 && row_fin==6)
-                MoveCard(row7, element, row6);
+                MoveCard(row7, element-1, row6);
             else if(row_init==7 && row_fin==2)
-                MoveCard(row7, element, row2);
+                MoveCard(row7, element-1, row2);
             
             showTableau(row1, row2, row3, row4, row5, row6, row7);
             ShowPile(pile, pos);
             show_Bins(bin1, bin2, bin3, bin4);
             cout<<endl;
-            //system('cls');
         }
         else if(opt==7)
             exit(0);
         
-    }while(1);
+        loop_ctr += 1;
+        cout<<"\n MOVES MADE: "<<loop_ctr<<"\n";
+    }while(flag==true && flag_win==false);
 }
 
 class GameMenu {
@@ -826,21 +846,23 @@ public:
         } while((!(startGame == 1 || startGame == 2 || startGame == 3)));
         switch (startGame) {
         case 1:
-            main_Game();
+                main_Game();
             break;
         case 2:
-            cout<<"Made by Piyush Ranjan Sahu and Manvith Krishna Kandukuri."<<endl<<endl;
-            break;
+                cout<<"Made by Piyush Ranjan Sahu and Manvith Krishna Kandukuri."<<endl<<endl;
+                break;
         case 3:
-            break;
+                exit(0);
+                break;
         }
     }
+    
 private:
     int startGame;
 };
 
 int main() {    
-    ssrand(time(NULL));
+    srand(time(NULL));
     GameMenu menu1;
     menu1.menuItems();
     //int num;
@@ -849,59 +871,3 @@ int main() {
 
     return 0;
 }
-
-
-/*
- 
- //IF GOTO FAILS TO RESTART, USE THIS
- 
- vector<cards> startingDeck(52);
- vector<cards> tableauDeck(52);
- vector<cards> pile(24);
- vector<cards> row1(1);
- vector<cards> row2(2);
- vector<cards> row3(3);
- vector<cards> row4(4);
- vector<cards> row5(5);
- vector<cards> row6(6);
- vector<cards> row7(7);
- //initialize card color in the deck
- for(int i=0; i<2; i++) {
- for(int j=(26*i); j<(26*2); j++){
- startingDeck[j].setColor(i);
- }
- }
- 
- //initialize card number and type in the deck
- for(int i=0;i<13;i++) {
- startingDeck[i].setNum(i+1);
- startingDeck[i].setType(0);
- }
- 
- for(int i=13;i<26;i++) {
- startingDeck[i].setNum(i-12);
- startingDeck[i].setType(1);
- }
- 
- for(int i=26;i<39;i++) {
- startingDeck[i].setNum(i-25);
- startingDeck[i].setType(2);
- }
- 
- for(int i=39;i<52;i++) {
- startingDeck[i].setNum(i-38);
- startingDeck[i].setType(3);
- }
- 
- //place 28 cards randomly on the tableau
- tableauDeck = Tableau(startingDeck, row1, row2, row3, row4, row5, row6, row7);
- 
- cout<<endl;
- 
- //Show the pile
- MakePile(startingDeck, tableauDeck, 0);
- ShowPile(pile, pos);
- cout<<endl;
- 
- showTableau(row1, row2, row3, row4, row5, row6, row7);
- */
