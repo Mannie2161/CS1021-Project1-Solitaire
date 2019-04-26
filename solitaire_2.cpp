@@ -359,7 +359,7 @@ void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, 
         else
             cout<<" * ";
     }
-    cout<<endl;
+    cout<<endl<<endl;
 }
 
 void Use_Pile(vector<cards> &pile, vector<cards> &target) {
@@ -371,9 +371,64 @@ void Use_Pile(vector<cards> &pile, vector<cards> &target) {
     }
 }
 
+void Edit_Bin(vector<cards> &bin, vector<cards> &row) {
+    
+    int size_b, size,i;
+    
+    for(i=0;i<row.size();i++);
+    size = i-1;
+    for(i=0;i<bin.size();i++);
+    size_b = i-1;
+    
+    if(bin.size()==0) {
+        if(row.at(size).getNum()==1) {
+            bin.push_back(row.at(size));
+            row.erase(row.begin()+size);
+            row.at(size-1).isFlipped=true;
+        }
+    }
+    else if(bin.size()!=0 && (bin.at(size_b).getNum() - row.at(size).getNum() == 1) && bin.at(size_b).getType() == row.at(size).getType()) {
+        bin.push_back(row.at(size));
+    }
+    else
+        cout<<"\n\nCannot be put in the bin\n\n";
+     
+}
+
+void show_Bins(vector<cards> &bin1, vector<cards> &bin2, vector<cards> &bin3, vector<cards> &bin4) {
+    
+    cout<<"\n\nBIN1: \n";
+    for(int i=0;i<bin1.size();i++)
+        cout<<bin1.at(i);
+    
+    cout<<"\nBIN2: \n";
+    for(int i=0;i<bin2.size();i++)
+        cout<<bin2.at(i);
+    
+    cout<<"\nBIN3: \n";
+    for(int i=0;i<bin3.size();i++)
+        cout<<bin3.at(i);
+    
+    cout<<"\nBIN4: \n";
+    for(int i=0;i<bin4.size();i++)
+        cout<<bin4.at(i);
+    
+    cout<<endl;
+}
+
+void pileToBin(vector<cards> &pile, vector<cards> &bin) {
+    for(int i=0;i<pile.size();i++) {
+        if(pile.at(i).isFlipped==true) {
+            bin.push_back(pile.at(i));
+            pile.erase(pile.begin()+i);
+        }
+    }
+}
+
+
 void main_Game() {
-    int opt, pos=-1, row_pile;
-    int element, row_init, row_fin;
+    int opt, pos=-1, row_pile, bin, bin_pile;
+    int element, row_init, row_fin, row_bin;
 RESTART:
     vector<cards> startingDeck(52);
     vector<cards> tableauDeck(52);
@@ -428,16 +483,17 @@ RESTART:
     //Show the pile
     MakePile(pile, startingDeck, tableauDeck, 0);
     ShowPile(pile, pos);
+    show_Bins(bin1, bin2, bin3, bin4);
     cout<<endl;
     
     //`     showTableau(row1, row2, row3, row4, row5, row6, row7);
     
     do{
-        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL NEXT FROM PILE\n 3 : USE CARD FROM PILE\n 4 : ADD CARD TO A BIN\n 5 : RESTART\n 6 : EXIT\n";
+        cout<<"\n 1 : MOVE CARD\n 2 : REVEAL NEXT FROM PILE\n 3 : USE CARD FROM PILE ON TABLEAU\n 4 : PUT CARD FROM PILE TO BIN\n 5 : ADD CARD TO A BIN\n 6 : RESTART\n 7 : EXIT\n";
         cin>>opt;
         //opt = _getchar();
         //system("CLS");
-        if(opt==5) {
+        if(opt==6) {
             pos = -1;
             cout<<"\nRESTARED\n\n";
             goto RESTART;
@@ -445,7 +501,101 @@ RESTART:
         
         else if(opt==2) {
             pos+=1;
+            
+            showTableau(row1, row2, row3, row4, row5, row6, row7);
             ShowPile(pile, pos);
+            show_Bins(bin1, bin2, bin3, bin4);
+        }
+        
+        else if(opt==4) {
+            cout<<"Choose bin: ";
+            cin>>bin_pile;
+            
+            if(bin_pile==1)
+                pileToBin(pile, bin1);
+            if(bin_pile==2)
+                pileToBin(pile, bin2);
+            if(bin_pile==3)
+                pileToBin(pile, bin3);
+            if(bin_pile==4)
+                pileToBin(pile, bin4);
+            
+            showTableau(row1, row2, row3, row4, row5, row6, row7);
+            ShowPile(pile, pos);
+            show_Bins(bin1, bin2, bin3, bin4);
+        }
+        
+        else if(opt==5) {
+            cout<<"Choose BIN: ";
+            cin>>bin;
+            
+            cout<<"Choose row where the card lies: ";
+            cin>>row_bin;
+            
+            if(bin==1 && row_bin==1)
+                Edit_Bin(bin1, row1);
+            else if(bin==1 && row_bin==2)
+                Edit_Bin(bin1, row2);
+            else if(bin==1 && row_bin==3)
+                Edit_Bin(bin1, row3);
+            else if(bin==1 && row_bin==4)
+                Edit_Bin(bin1, row4);
+            else if(bin==1 && row_bin==5)
+                Edit_Bin(bin1, row5);
+            else if(bin==1 && row_bin==6)
+                Edit_Bin(bin1, row6);
+            else if(bin==1 && row_bin==7)
+                Edit_Bin(bin1, row7);
+            
+            else if(bin==2 && row_bin==1)
+                Edit_Bin(bin2, row1);
+            else if(bin==2 && row_bin==2)
+                Edit_Bin(bin2, row2);
+            else if(bin==2 && row_bin==3)
+                Edit_Bin(bin2, row3);
+            else if(bin==2 && row_bin==4)
+                Edit_Bin(bin2, row4);
+            else if(bin==2 && row_bin==5)
+                Edit_Bin(bin2, row5);
+            else if(bin==2 && row_bin==6)
+                Edit_Bin(bin2, row6);
+            else if(bin==2 && row_bin==7)
+                Edit_Bin(bin2, row7);
+            
+            else if(bin==3 && row_bin==1)
+                Edit_Bin(bin3, row1);
+            else if(bin==3 && row_bin==2)
+                Edit_Bin(bin3, row2);
+            else if(bin==3 && row_bin==3)
+                Edit_Bin(bin3, row3);
+            else if(bin==3 && row_bin==4)
+                Edit_Bin(bin3, row4);
+            else if(bin==3 && row_bin==5)
+                Edit_Bin(bin3, row5);
+            else if(bin==3 && row_bin==6)
+                Edit_Bin(bin3, row6);
+            else if(bin==3 && row_bin==7)
+                Edit_Bin(bin3, row7);
+            
+            else if(bin==4 && row_bin==1)
+                Edit_Bin(bin4, row1);
+            else if(bin==4 && row_bin==2)
+                Edit_Bin(bin4, row2);
+            else if(bin==4 && row_bin==3)
+                Edit_Bin(bin4, row3);
+            else if(bin==4 && row_bin==4)
+                Edit_Bin(bin4, row4);
+            else if(bin==4 && row_bin==5)
+                Edit_Bin(bin4, row5);
+            else if(bin==4 && row_bin==6)
+                Edit_Bin(bin4, row6);
+            else if(bin==4 && row_bin==7)
+                Edit_Bin(bin4, row7);
+            
+            showTableau(row1, row2, row3, row4, row5, row6, row7);
+            ShowPile(pile, pos);
+            show_Bins(bin1, bin2, bin3, bin4);
+
         }
         
         else if(opt==3) {
@@ -469,6 +619,7 @@ RESTART:
             
             showTableau(row1, row2, row3, row4, row5, row6, row7);
             ShowPile(pile, pos);
+            show_Bins(bin1, bin2, bin3, bin4);
         }
         
         else if(opt==1) {
@@ -574,10 +725,11 @@ RESTART:
             
             showTableau(row1, row2, row3, row4, row5, row6, row7);
             ShowPile(pile, pos);
+            show_Bins(bin1, bin2, bin3, bin4);
             cout<<endl;
             //system('cls');
         }
-        else if(opt==6)
+        else if(opt==7)
             exit(0);
         
     }while(1);
