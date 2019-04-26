@@ -55,6 +55,16 @@ public:
     int getNum() {
         return num;
     }
+    
+    int getColor() {
+        if(type == "spades" || type == "clubs")
+            return 1;
+        else if(type == "hearts" || type == "diamonds")
+            return 2;
+        else
+            return 0;
+    }
+    
     void display() {
         cout<<type<<num<<endl;
     }
@@ -282,7 +292,7 @@ void MoveCard(vector<cards> &row_init, int element, vector<cards> &row_fin) {
     
     
     else if(row_init.at(element).isFlipped==true) {     //CHECK IF THE NUMBER BEING ADDED IS ONE LOWER THAN THE PREVIOUS ONE
-        if(row_fin.at(size).getNum() - row_init.at(element).getNum()==1) {
+        if((row_fin.at(size).getNum() - row_init.at(element).getNum()==1) && (row_fin.at(size).getColor()!=row_init.at(element).getColor())) {
             for(int i=element; i<row_init.size();i++) {
                 row_fin.push_back(row_init.at(i));
                 counter +=1;
@@ -363,14 +373,25 @@ void showTableau(vector<cards> &row1, vector<cards> &row2, vector<cards> &row3, 
 }
 
 void Use_Pile(vector<cards> &pile, vector<cards> &target) {
+    int i, size;
+    for(i=0;i<target.size();i++);
+    size = i-1;
+    
     for(int i=0;i<pile.size();i++) {
         if(pile.at(i).isFlipped==true) {
-            target.push_back(pile.at(i));
-            pile.erase(pile.begin()+i);
+            if((target.at(size).getNum() - pile.at(i).getNum()==1) && (target.at(size).getColor()!=pile.at(i).getColor())) {
+                    target.push_back(pile.at(i));
+                    pile.erase(pile.begin()+i);
+                }
+            else
+                cout<<"\n\nCANNOT PUT CARD TO THE TABLEAU\n\n";
         }
     }
 }
-
+/*
+target.push_back(pile.at(i));
+pile.erase(pile.begin()+i);
+*/
 void Edit_Bin(vector<cards> &bin, vector<cards> &row) {
     
     int size_b, size,i;
@@ -386,12 +407,20 @@ void Edit_Bin(vector<cards> &bin, vector<cards> &row) {
             row.erase(row.begin()+size);
             row.at(size-1).isFlipped=true;
         }
+        else
+            cout<<"\n\nCANNOT PUT CARD TO THE BIN\n\n";
     }
-    else if(bin.size()!=0 && (bin.at(size_b).getNum() - row.at(size).getNum() == 1) && bin.at(size_b).getType() == row.at(size).getType()) {
-        bin.push_back(row.at(size));
+    else if(bin.size()!=0) {
+        if((bin.at(size_b).getNum() - row.at(size).getNum() == 1) && (bin.at(size_b).getType() == row.at(size).getType())) {
+            bin.push_back(row.at(size));
+            row.erase(row.begin()+size);
+            row.at(size-1).isFlipped=true;
+        }
+        else
+            cout<<"\n\nCANNOT PUT CARD TO THE BIN\n\n";
     }
     else
-        cout<<"\n\nCannot be put in the bin\n\n";
+        cout<<"\n\nCANNOT PUT CARD TO THE BIN\n\n";
      
 }
 
@@ -416,13 +445,35 @@ void show_Bins(vector<cards> &bin1, vector<cards> &bin2, vector<cards> &bin3, ve
     cout<<endl;
 }
 
-void pileToBin(vector<cards> &pile, vector<cards> &bin) {
-    for(int i=0;i<pile.size();i++) {
-        if(pile.at(i).isFlipped==true) {
-            bin.push_back(pile.at(i));
-            pile.erase(pile.begin()+i);
+void pileToBin(vector<cards> &pile, vector<cards> &target) {
+    int j, size;
+    for(j=0;j<target.size();j++);
+    size=j-1;
+    
+    if(target.size()==0) {
+        for(int i=0;i<pile.size();i++) {
+            if(pile.at(i).isFlipped==true) {
+                if(pile.at(i).getNum()==1) {
+                    target.push_back(pile.at(i));
+                    pile.erase(pile.begin()+i);
+                }
+            }
         }
     }
+    
+    else if(target.size()!=0) {
+        for(int i=0;i<pile.size();i++) {
+            if(pile.at(i).isFlipped==true) {
+                if((target.at(size).getNum() - pile.at(i).getNum()==1) && (target.at(size).getColor()!=pile.at(i).getColor())) {
+                    target.push_back(pile.at(i));
+                    pile.erase(pile.begin()+i);
+                }
+            }
+        }
+    }
+    
+    else
+        cout<<"\n\nCANNOT PUT CARD TO THE BIN.\n\n";
 }
 
 
@@ -734,8 +785,9 @@ RESTART:
         
     }while(1);
 }
-int main() {
-    
+
+
+int main() {    
     srand(time(NULL));
     main_Game();
     
