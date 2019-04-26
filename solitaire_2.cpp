@@ -786,11 +786,63 @@ RESTART:
     }while(1);
 }
 
+class GameMenu {
+
+public:
+    GameMenu() {
+        cout<<"{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{SOLITAIRE}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}"<<endl<<endl;
+        cout<<"--------------------------------------------------Welcome!-----------------------------------------------------------"<<endl<<endl;
+        startGame = 0;
+    }
+
+    GameMenu(int start){
+        cout<<"{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{SOLITAIRE}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}"<<endl<<endl;
+        cout<<"--------------------------------------------------Welcome!-----------------------------------------------------------"<<endl<<endl;
+        startGame = start;
+    }
+
+    void setOption(int start){
+        if(start == 1 || start == 2 || start == 3){
+            startGame = start;
+        }
+    }
+    void display(){
+        cout<<"1. Start Game"<<endl;
+        cout<<"2. Info"<<endl;
+        cout<<"3. Quit"<<endl<<endl;
+    }
+    void menuItems(){
+        if (startGame != 0){
+            cin>>startGame;
+        }
+        display();
+        int itr = 0;
+        do {
+            if (itr > 0){
+                cout<<"Please selct a valid option (1, 2, 3)!"<<endl<<endl;
+            }
+            cin>>startGame;
+            ++itr;
+        } while((!(startGame == 1 || startGame == 2 || startGame == 3)));
+        switch (startGame) {
+        case 1:
+            main_Game();
+            break;
+        case 2:
+            cout<<"Made by Piyush Ranjan Sahu and Manvith Krishna Kandukuri."<<endl<<endl;
+            break;
+        case 3:
+            break;
+        }
+    }
+private:
+    int startGame;
+};
 
 int main() {    
-    srand(time(NULL));
-    main_Game();
-    
+    ssrand(time(NULL));
+    GameMenu menu1;
+    menu1.menuItems();
     //int num;
     //cout<<"Flip the pile? ";
     //cin >> num;
